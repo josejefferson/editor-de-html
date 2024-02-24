@@ -1,0 +1,450 @@
+/*
+---------------------------------
+Material Design (PC)
+Versão ALPHA
+Desenvolvido por Jefferson Dantas
+Baseado em Google Material Design
+---------------------------------
+*/
+
+/* *TODO tirar position fixed da topbar e remover padding top no script além de adicionar topbar fixa e flutuante */
+/* *FIX snackbar min-height: 48px
+
+
+*/
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
+@import url('material-elevation.css');
+@import url('material-colors.css');
+
+:root {
+	-webkit-tap-highlight-color: transparent;
+	font-family: "Roboto", "Arial", sans-serif;
+}
+
+*[hidden=""] {
+	display: none !important;
+}
+
+/* Ripple */
+.legitRipple > .legitRipple-ripple,
+.legitRipple.darkRipple {
+	background-color: rgba(0,0,0,0.2);
+}
+
+.legitRipple.lightRipple > * .legitRipple-ripple {
+	background-color: rgba(255,255,255,0.2);
+}
+
+/* *TODO Apagar nicescroll */
+.nicescroll-cursors {
+	background: rgba(0,0,0,0.3) !important;
+	border: none !important;
+	cursor: pointer;
+	transition: background .15s ease;
+}
+
+.nicescroll-cursors:hover {
+	background: rgba(0,0,0,0.5) !important;
+}
+
+.nicescroll-cursors:active {
+	background: rgba(0,0,0,0.7) !important;
+}
+
+/* *TODO apagar scrShadow */
+.scrShadow.boxShadowInsetLeft {
+	box-shadow: inset 20px 0px 10px -20px rgba(0,0,0,0.5);
+}
+
+.scrShadow.boxShadowInsetLeftRight {
+	box-shadow: inset 20px 0px 10px -20px rgba(0,0,0,0.5), inset -20px 0px 10px -20px rgba(0,0,0,0.5);
+}
+
+.scrShadow.boxShadowInsetRight {
+	box-shadow: inset -20px 0px 10px -20px rgba(0,0,0,0.5);
+}
+
+/* Barra superior */
+.topbar {
+	align-items: center;
+	background: #3F51B5;
+	box-shadow: var(--elevation-4dp);
+	color: #FFF;
+	display: flex;
+	font-size: 1.25rem;
+	font-weight: 500;
+	height: 64px;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	transition: top .1s ease, box-shadow .3s ease;
+	user-select: none;
+	z-index: 20; /* !!! */
+}
+
+.mini-topbar {
+	height: 48px;
+}
+.topbar.fixed {
+	position: fixed;
+}
+
+.topbar.indented {
+	top: -74px;
+}
+
+.topbar button,
+.topbar a {
+	align-items: center;
+	background: none;
+	border-radius: 50%;
+	border: none;
+	color: #FFFFFF;
+	cursor: pointer;
+	display: inline-flex;
+	font-size: 18px;
+	height: 48px;
+	justify-content: center;
+	margin: 0;
+	outline: none;
+	padding: 0;
+	transition: .15s ease;
+	vertical-align: middle;
+	width: 48px !important;
+}
+
+.topbar button:hover,
+.topbar a:hover {
+	background: rgba(0,0,0,0.08);
+}
+
+.topbar button.lightRipple:hover,
+.topbar a.lightRipple:hover {
+	background: rgba(255,255,255,0.08);
+}
+
+.topbar button.text-button,
+.topbar a.text-button {
+	border-radius: 1000px;
+	font-size: 18px;
+	padding: 0 10px;
+	white-space: nowrap;
+	width: auto !important;
+}
+
+.topbar .side-button {
+	margin-left: 12px !important;
+	width: 48px !important;
+}
+
+.topbar .title {
+	font-weight: 500;
+	letter-spacing: .0125em;
+	overflow: hidden;
+	padding-left: 20px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.topbar .buttons {
+	margin-left: auto;
+	padding-left: 20px;
+	padding-right: 3px;
+	white-space: nowrap;
+}
+
+.topbar .content {
+	height: calc(100% - 16px);
+	margin-left: 20px;
+	overflow-x: auto;
+	padding: 8px 0 !important;
+	white-space: nowrap;
+	width: 100%;
+}
+
+/* Botão flutuante */
+.fab-button { /* Criar um botão FAB não flutuante */
+	align-items: center;
+	background: #3F51B5;
+	border-radius: 50%;
+	border: 0;
+	bottom: 32px;
+	box-shadow: var(--elevation-6dp);
+	color: #FFFFFF;
+	cursor: pointer;
+	display: inline-flex;
+	height: 56px;
+	justify-content: center;
+	outline: none;
+	position: fixed !important;
+	right: 32px;
+	transition: box-shadow 0.25s ease, bottom 0.3s ease;
+	user-select: none;
+	vertical-align: middle;
+	width: 56px;
+	z-index: 21; /* !!! */
+}
+
+.fab-button:hover { /* Background lighten!!! */
+	box-shadow: var(--elevation-12dp);
+}
+
+/* Snackbar */
+.snackBar {
+	align-items: center;
+	background-color: #323232;
+	border-radius: 2px;
+	bottom: 10px;
+	box-shadow: var(--elevation-6dp);
+	display: flex;
+	justify-content: space-between;
+	left: 8px;
+	max-width: 338.462px;
+	min-height: 20px;
+	min-width: 288px;
+	overflow: hidden;
+	padding: 8px 24px;
+	position: fixed;
+	transform: translateY(calc(100% + 10px));
+	transition: .1s ease;
+	user-select: none;
+	z-index: 26; /* !!! */
+}
+.snackBar .text {
+	color: #F1F1F1;
+	font-size: 14px;
+	padding: 6px 0;
+	word-break: break-word;
+}
+
+.snackBar .function {
+	display: flex;
+	height: 36px;
+	margin-left: auto;
+	padding-left: 48px;
+	text-transform: uppercase;
+}
+
+.snackBar .function button,
+.snackBar .function a {
+	align-items: center;
+	background: none;
+	border-radius: 4px;
+	border: none;
+	color: gold;
+	cursor: pointer;
+	display: flex;
+	font-family: Roboto, sans-serif;
+	font-size: 14px;
+	height: 100%;
+	margin: 0;
+	outline:none;
+	padding: 0 8px;
+	text-decoration: none;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+/* Menu de opções */
+.menu {
+	background: #FFF;
+	border-radius: 4px;
+	box-shadow: var(--elevation-8dp);
+	display: inline-block;
+	min-width: 82px;
+	padding: 8px 0;
+	position: absolute;
+	transform-origin: top left;
+	transform: scale(0);
+	transition: transform .15s ease;
+	user-select: none;
+	z-index: 25;
+}
+
+.menuFade {
+	background: none;
+	bottom: 0;
+	display: none;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	width: 100%;
+	z-index: 24;
+}
+
+.menu button, .menu a {
+	align-items: center;
+	background: none;
+	border: none;
+	color: black;
+	cursor: pointer;
+	display: flex;
+	font-family: 'Roboto', sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	height: 48px;
+	letter-spacing: .00937em;
+	outline: none;
+	padding: 0 16px;
+	text-align: left;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.menu button {
+	width: 100%;
+}
+
+.menu button:hover,
+.menu a:hover {
+	background: #F5F5F5;
+}
+
+.menu .divider {
+	border: none;
+	border-bottom: rgba(0,0,0,.12) 1px solid;
+	margin: 8px 0;
+}
+
+.menu button .material-icons,
+.menu button .mdi,
+.menu a .material-icons,
+.menu a .mdi {
+	color: #888;
+	margin-right: 24px;
+}
+
+.menu.top-left {
+	left: 10px;
+	top: 10px;
+	transform-origin: top left;
+}
+
+.menu.top-right {
+	right: 10px;
+	top: 10px;
+	transform-origin: top right;
+}
+
+.menu.bottom-left {
+	bottom: 10px;
+	left: 10px;
+	transform-origin: bottom left;
+}
+
+.menu.bottom-right {
+	bottom: 10px;
+	right: 10px;
+	transform-origin: bottom right;
+}
+
+/* Botões */
+.button {
+	background: #607D8B;
+	border-radius: 2px;
+	border: none;
+	box-shadow: var(--elevation-2dp);
+	color: #FFFFFF;
+	cursor: pointer;
+	display: inline-flex;
+	font-family: Roboto;
+	font-size: 15px;
+	font-weight: 400;
+	letter-spacing: .8px;
+	line-height: 35px;
+	min-height: 35px;
+	outline: none;
+	padding: 0 1.5rem;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: .15s ease;
+	user-select: none;
+	vertical-align: middle;
+}
+
+.button:not(.flatButton):hover {
+	box-shadow: var(--elevation-4dp);
+}
+
+.button:not(.flatButton):active {
+	box-shadow: var(--elevation-8dp);
+}
+
+.button.flatButton {
+	background: none;
+	box-shadow: none;
+	color: #607D8B;
+}
+
+.button.flatButton:hover {
+	background: rgba(0,0,0,0.08);
+}
+
+.button.flatButton.lightRipple:hover {
+	background: rgba(255,255,255,0.08);
+}
+
+/* Elementos sem sombra */
+.no-shadow {
+	box-shadow: none;
+	text-shadow: none;
+}
+
+/* Spinner */
+.progressCircle-circle {
+	animation: progressCircle-rotate 1.4s linear infinite;
+	height: 36px;
+	width: 36px;
+}
+
+.progressCircle circle {
+	animation: progressCircle-size 1.4s ease-in-out infinite;
+	stroke: #607D8B;
+	stroke-dasharray: 80px, 200px;
+	stroke-dashoffset: 0px;
+}
+
+@keyframes progressCircle-rotate {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes progressCircle-size {
+	0% {
+		stroke-dasharray: 1px, 200px;
+		stroke-dashoffset: 0px;
+	}
+
+	50% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -15px;
+	}
+
+	100% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -125px;
+	}
+}
+
+.fullScreenContainer {
+	background: white;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.centered {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	vertical-align: middle;
+}

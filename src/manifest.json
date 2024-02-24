@@ -1,0 +1,13 @@
+{
+	"short_name": "Editor de HTML",
+	"name": "Editor de HTML",
+	"icons": [{
+		"src": "icon192.png",
+		"type": "image/png",
+		"sizes": "192x192"
+	}],
+	"start_url": "../index.html?app",
+	"background_color": "#E0E0E0",
+	"display": "standalone",
+	"theme_color": "#9E9E9E"
+}

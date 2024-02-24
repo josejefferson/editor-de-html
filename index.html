@@ -1,0 +1,162 @@
+<!--
+---------------------------------
+Editor de HTML
+Versão 1.2.0
+Desenvolvido por Jefferson Dantas
+---------------------------------
+-->
+
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="theme-color" content="#9E9E9E">
+	<link rel="shortcut icon" href="src/icon32.png" type="image/png">
+	<link rel="manifest" href="src/manifest.json">
+	<title>Editor de HTML</title>
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/legit-ripple@1.1.0/css/ripple.css">
+	<link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs/editor/editor.main.min.css">
+	<link rel="stylesheet" href="src/material-design-pc.css">
+	<link rel="stylesheet" href="src/material-colors.css">
+	<link rel="stylesheet" href="src/material-elevation.css">
+	<link rel="stylesheet" href="src/index.css">
+</head>
+
+<body onload="onLoad()">
+
+	<div class="loadingView fullScreenContainer centered">
+		<div class="progressCircle"></div>
+	</div>
+
+	<div class="topbar indigo lightRipple no-shadow">
+		<div class="title">Editor de HTML</div>
+		<div class="buttons">
+			<button title="Abrir arquivo" onclick="$('#openFile').click()"><i class="mdi mdi-folder"></i></button>
+			<button title="Salvar" onclick="saveFile()"><i class="mdi mdi-content-save"></i></button>
+			<button title="Expandir código" class="visualization" onclick="expandCode()"><i class="mdi mdi-view-stream"></i></button>
+			<button title="Adicionar bibliotecas" class="addPackages" onclick="openMenu('.packagesMenu')"><i class="mdi mdi-bookmark-box-multiple"></i></button>
+			<button title="Tela cheia" class="fullScreen" onclick="fullScreen()"><i class="mdi mdi-fullscreen"></i></button>
+			<button title="Atualizar" class="refresh" onclick="reloadHTML()"><i class="mdi mdi-refresh"></i></button>
+			<button onclick="openMenu('.mainMenu')"><i class="mdi mdi-dots-vertical"></i></button>
+		</div>
+	</div>
+
+	<div class="menu mainMenu top-right">
+		<input type="file" id="openFile" accept=".html,.htm,.css,.js" hidden />
+		<button onclick="copyCode()"><i class="mdi mdi-content-copy"></i>Copiar código</button>
+		<button onclick="deleteCode()"><i class="mdi mdi-delete"></i>Apagar código</button>
+		<button onclick="beautifierCode()"><i class="mdi mdi-sort-variant"></i>Organizar código</button>
+		<button onclick="toggleWordWrap()"><i class="mdi mdi-format-text-wrapping-wrap"></i>Quebra de linha</button>
+		<button class="hiddenCharacters" onclick="showInvisibleCharacters()"><i class="mdi mdi-eye"></i> Caracteres invisíveis</button>
+		<button onclick="snackBar('.info')"><i class="mdi mdi-information"></i>Sobre este editor</button>
+	</div>
+
+	<div class="menu packagesMenu top-right">
+		<button onclick="addLibrary('html')"><i class="mdi mdi-code-tags"></i> HTML (estrutura)</button>
+		<button onclick="addLibrary('jquery')"><i class="mdi mdi-code-tags"></i> jQuery</button>
+		<button onclick="addLibrary('bootstrap')"><i class="mdi mdi-code-tags"></i> Bootstrap</button>
+		<button onclick="addLibrary('materialize')"><i class="mdi mdi-code-tags"></i> Materialize</button>
+		<button onclick="addLibrary('fontawesome')"><i class="mdi mdi-code-tags"></i> FontAwesome</button>
+		<button onclick="addLibrary('materialicons')"><i class="mdi mdi-code-tags"></i> Material Icons</button>
+		<button onclick="addLibrary('materialdesignicons')"><i class="mdi mdi-code-tags"></i> Material Design Icons</button>
+		<button onclick="addLibrary('sweetalert2')"><i class="mdi mdi-code-tags"></i> SweetAlert2</button>
+		<button onclick="addLibrary('axios')"><i class="mdi mdi-code-tags"></i> Axios</button>
+		<button onclick="addLibrary('moment')"><i class="mdi mdi-code-tags"></i> Moment</button>
+		<button onclick="addLibrary('angularjs')"><i class="mdi mdi-code-tags"></i> AngularJS</button>
+		<button onclick="addLibrary('cleave')"><i class="mdi mdi-code-tags"></i> Cleave</button>
+		<button onclick="addLibrary('lodash')"><i class="mdi mdi-code-tags"></i> Lodash</button>
+		<button onclick="addLibrary('underscore')"><i class="mdi mdi-code-tags"></i> Underscore</button>
+	</div>
+
+	<main>
+		<!-- Entrada de código -->
+		<div class="editor show" id="editor-html"></div>
+		<div class="editor" id="editor-css"></div>
+		<div class="editor" id="editor-js"></div>
+
+		<div class="editor-tabs">
+			<div tabIndex="1" onclick="showEditor('html')" class="editor-tab tab-html selected">HTML</div>
+			<div tabIndex="1" onclick="showEditor('css')" class="editor-tab tab-css">CSS</div>
+			<div tabIndex="1" onclick="showEditor('js')" class="editor-tab tab-js">JS</div>
+		</div>
+
+		<!-- Barra de redimensionamento -->
+		<div class="resizeBar"></div>
+
+		<!-- Saída de código -->
+		<div class="mainView"><iframe id="output"></iframe></div>
+	</main>
+
+	<div class="result">
+		<div class="topbar result-topbar">
+			<button class="side-button" onclick="hideResult()"><i class="mdi mdi-menu-down"></i></button>
+			<div class="title">Resultado</div>
+			<div class="buttons"><button onclick="reloadHTML()"><i class="mdi mdi-refresh"></i></button></div>
+		</div>
+		<div class="resultView"></div>
+	</div>
+
+	<!-- Snackbar: copiar código -->
+	<div class="snackBar copyCode">
+		<div class="text">
+			Conteúdo copiado para a área de transferência
+		</div>
+	</div>
+
+	<!-- Snackbar: apagar código -->
+	<div class="snackBar deleteCode">
+		<div class="text">
+			O código foi apagado
+		</div>
+	</div>
+
+	<!-- Snackbar: salvar arquivo -->
+	<div class="snackBar saveFile">
+		<div class="text">
+			Clique em BAIXAR para salvar seu arquivo
+		</div>
+		<div class="function">
+			<a class="fileDownloadLink">BAIXAR</a>
+		</div>
+	</div>
+
+	<!-- Snackbar: organizar código -->
+	<div class="snackBar beautifierCode">
+		<div class="text">
+			O código foi organizado<br>
+			Dica: Pressione Shift + Alt + F para organizar o código
+		</div>
+	</div>
+
+	<!-- Snackbar: informações do editor -->
+	<div class="snackBar info">
+		<div class="text">
+			Editor de HTML<br>
+			Versão 1.2.0<br>
+			Desenvolvido por Jefferson Dantas
+		</div>
+	</div>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/legit-ripple@1.1.0/js/ripple.js"></script>
+	
+	<script src="src/dracula.js"></script>
+	<script src="src/monaco-themes.min.js"></script>
+	<script src="vs/loader.js"></script>
+	<script src="vs/editor/editor.main.nls.js"></script>
+	<script src="vs/editor/editor.main.js"></script>
+	<script src="vs/basic-languages/css/css.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/emmet-monaco-es@5.1.0/dist/emmet-monaco.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.0/beautifier.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.0/beautify-html.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.0/beautify-css.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.0/beautify.min.js"></script>
+	<script src="src/material-design-pc.js"></script>
+	<script src="src/index.js"></script>
+</body>
+
+</html>

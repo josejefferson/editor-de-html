@@ -1,0 +1,125 @@
+:root {
+	--background-color: var(--darkPrimary-indigo);
+	--loadingPage-background: var(--grey-300);
+	--progressCircle-color: var(--primary-indigo);
+}
+
+body {
+	margin: 0;
+	/*overflow: hidden;*/
+}
+
+.packagesMenu {
+	right: 162px !important;
+}
+
+.h-scroll {
+	background: white;
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding: 12px;
+	white-space: nowrap;
+	width: 100%;
+}
+
+.flatButton {
+	color: var(--primary-indigo) !important;
+}
+
+main {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.editor {
+	/*float: left;*/
+	flex-basis: calc(30% - 2.5px);
+	height: calc(100% - 38px);
+	transition: .15s linear;
+}
+
+.editor:not(.show) {
+	display: none;
+}
+
+.resizeBar {
+	flex-basis: 5px;
+	cursor: col-resize;
+}
+
+.mainView {
+	flex: 1;
+}
+
+.mainView #output {
+	background: white;
+	border: none;
+	/*float: right;*/
+	width: 100%;
+	height: 100%;
+}
+
+.resultView #output {
+	background: white;
+	border: none;
+	width: 100%;
+	height: calc(100% - 66px);
+}
+
+.result {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 100%;
+	transition: .15s linear;
+	z-index: 20;
+}
+
+.loadingView {
+	background-color: var(--loadingPage-background);
+	z-index: 100;
+}
+
+.loadingView .progressCircle svg circle {
+	stroke: var(--progressCircle-color);
+}
+
+.mdi {
+	font-size: 24px;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.editor-tabs {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: calc(30% - 2.5px);
+	display: flex;
+	cursor: pointer;
+}
+
+.editor-tab {
+	flex: 1;
+	color: white;
+	padding: 8px;
+	text-align: center;
+	border-top: transparent 3px solid;
+	background: var(--darkPrimary-indigo);
+}
+
+.editor-tab:hover {
+	background: var(--indigo-800);
+}
+
+.editor-tab:active {
+	background: var(--indigo-900);
+}
+
+.editor-tab.selected {
+	border-top: white 3px solid;
+}
